@@ -1,0 +1,32 @@
+# Enable Rewrite Engine
+RewriteEngine On
+
+# Redirect to HTTPS (uncomment in production)
+# RewriteCond %{HTTPS} off
+# RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Prevent directory listing
+Options -Indexes
+
+# Protect sensitive files
+<FilesMatch "\.(sql|ini|log|md)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+<IfModule mod_headers.c>
+    <FilesMatch "\.(mp4|mov|m4v)$">
+        Header set Accept-Ranges "bytes"
+    </FilesMatch>
+</IfModule>
+
+# PHP Settings
+php_value upload_max_filesize 100M
+php_value post_max_size 100M
+php_value max_execution_time 300
+php_value max_input_time 300
+php_value max_input_time 300
+
+# Error pages (optional)
+# ErrorDocument 404 /backend/404.html
+# ErrorDocument 500 /backend/500.html

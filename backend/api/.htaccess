@@ -1,0 +1,32 @@
+# API Directory .htaccess
+# Enable Rewrite Engine
+RewriteEngine On
+
+# Allow access to PHP files
+<FilesMatch "\.php$">
+    Order allow,deny
+    Allow from all
+</FilesMatch>
+
+# Set default charset
+AddDefaultCharset UTF-8
+
+# Prevent directory listing
+Options -Indexes
+
+# CORS: allow all (public API)
+<IfModule mod_headers.c>
+    Header set Access-Control-Allow-Origin "*"
+    Header set Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS"
+    Header set Access-Control-Allow-Headers "Content-Type, Authorization, X-Requested-With, Accept"
+    Header set Access-Control-Max-Age "86400"
+
+    <FilesMatch "\.(mp4|mov|m4v)$">
+        Header set Accept-Ranges "bytes"
+    </FilesMatch>
+</IfModule>
+
+# OPTIONS preflight: respond 204 so PHP CORS runs for actual API requests
+RewriteCond %{REQUEST_METHOD} OPTIONS
+RewriteRule ^ - [L,R=204]
+

@@ -1,0 +1,14 @@
+RewriteEngine On
+RewriteBase /
+RewriteRule ^index\.html$ - [L]
+RewriteCond %{REQUEST_URI} ^/api/
+RewriteRule ^ - [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /index.html [L]
+
+<IfModule mod_headers.c>
+    <FilesMatch "\.(mp4|mov|m4v)$">
+        Header set Accept-Ranges "bytes"
+    </FilesMatch>
+</IfModule>

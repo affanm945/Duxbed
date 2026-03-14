@@ -1,0 +1,17 @@
+# SPA fallback: serve index.html for client-side routes (React Router)
+RewriteEngine On
+RewriteBase /
+RewriteRule ^index\.html$ - [L]
+# Do not rewrite API requests if you add backend later
+RewriteCond %{REQUEST_URI} ^/api/
+RewriteRule ^ - [L]
+# If the request is not for a real file or directory, send to index.html
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /index.html [L]
+
+<IfModule mod_headers.c>
+    <FilesMatch "\.(mp4|mov|m4v)$">
+        Header set Accept-Ranges "bytes"
+    </FilesMatch>
+</IfModule>
